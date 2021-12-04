@@ -11,7 +11,7 @@
 	<link rel="stylesheet" type="text/css" href="./styles.css"></link>
 
 	<!--- Meta information. --->
-	<link rel="shortcut icon" type="image/png" href="/invision-icon-pink.png"></link>
+	<link rel="shortcut icon" type="image/png" href="./invision-icon-pink.png"></link>
 
 	<!-- Social media information. -->
 	<meta name="twitter:card" content="summary_large_image" />
@@ -41,9 +41,9 @@
 	</h1>
 
 	<ul tabindex="-1" class="cards">
-		<li id="principle-1-humility" class="cards__item">
+		<li class="cards__item">
 
-			<div class="cards__card card">
+			<div id="principle-1-humility" class="cards__card card">
 				<div class="card__index">
 					<a href="#principle-1-humility" class="card__anchor">
 						Principle One
@@ -64,9 +64,9 @@
 			</div>
 
 		</li>
-		<li id="principle-2-co-ownership" class="cards__item">
+		<li class="cards__item">
 
-			<div class="cards__card card">
+			<div id="principle-2-co-ownership" class="cards__card card">
 				<div class="card__index">
 					<a href="#principle-2-co-ownership" class="card__anchor">
 						Principle Two
@@ -87,9 +87,9 @@
 			</div>
 
 		</li>
-		<li id="principle-3-candor-with-compassion" class="cards__item">
+		<li class="cards__item">
 
-			<div class="cards__card card">
+			<div id="principle-3-candor-with-compassion" class="cards__card card">
 				<div class="card__index">
 					<a href="#principle-3-candor-with-compassion" class="card__anchor">
 						Principle Three
@@ -111,9 +111,9 @@
 			</div>
 
 		</li>
-		<li id="principle-4-relentless-self-development" class="cards__item">
+		<li class="cards__item">
 
-			<div class="cards__card card">
+			<div id="principle-4-relentless-self-development" class="cards__card card">
 				<div class="card__index">
 					<a href="#principle-4-relentless-self-development" class="card__anchor">
 						Principle Four
@@ -135,9 +135,9 @@
 			</div>
 
 		</li>
-		<li id="principle-5-go-getting-and-go-giving" class="cards__item">
+		<li class="cards__item">
 
-			<div class="cards__card card">
+			<div id="principle-5-go-getting-and-go-giving" class="cards__card card">
 				<div class="card__index">
 					<a href="#principle-5-go-getting-and-go-giving" class="card__anchor">
 						Principle Five
@@ -159,9 +159,9 @@
 			</div>
 
 		</li>
-		<li id="principle-6-customer-empathy" class="cards__item">
+		<li class="cards__item">
 
-			<div class="cards__card card">
+			<div id="principle-6-customer-empathy" class="cards__card card">
 				<div class="card__index">
 					<a href="#principle-6-customer-empathy" class="card__anchor">
 						Principle Six
@@ -183,9 +183,9 @@
 			</div>
 
 		</li>
-		<li id="principle-7-inclusive-design" class="cards__item">
+		<li class="cards__item">
 
-			<div class="cards__card card">
+			<div id="principle-7-inclusive-design" class="cards__card card">
 				<div class="card__index">
 					<a href="#principle-7-inclusive-design" class="card__anchor">
 						Principle Seven
@@ -207,9 +207,9 @@
 			</div>
 
 		</li>
-		<li id="principle-8-intelligent-urgency" class="cards__item">
+		<li class="cards__item">
 
-			<div class="cards__card card">
+			<div id="principle-8-intelligent-urgency" class="cards__card card">
 				<div class="card__index">
 					<a href="#principle-8-intelligent-urgency" class="card__anchor">
 						Principle Eight
@@ -238,6 +238,7 @@
 
 			focusCards();
 			scrollCardIntoView();
+			setupIntersectionObserver();
 
 			// ----------------------------------------------------------------------- //
 			// ----------------------------------------------------------------------- //
@@ -263,15 +264,79 @@
 
 				}
 
-				var node = document.querySelector( window.location.hash );
+				// Since the hash is prefixed with "#", we can use it to generate a CSS
+				// selector for the ID of the card. That said, since this is technically
+				// "user provided content", we have to wrap in a try/catch since a user
+				// may provide an invalid fragment.
+				try {
 
-				if ( ! node ) {
+					var node = document.querySelector( window.location.hash );
+
+				} catch ( error ) {
 
 					return;
 
 				}
 
-				node.scrollIntoView();
+				if ( node ) {
+
+					node.scrollIntoView();
+
+				}
+
+			}
+
+
+			// I used the IntersectionObserver API to dynamically change the URL to
+			// reflect the InVision Principle Card that is most visible on the page.
+			function setupIntersectionObserver() {
+
+				if ( ! window.IntersectionObserver || ! window.location.replace ) {
+
+					return;
+
+				}
+
+				var observer = new IntersectionObserver(
+					handleIntersection,
+					{
+						threshold: 1 // Only ENTIRE-card changes are reflected.
+					}
+				);
+
+				document.querySelectorAll( ".card" ).forEach(
+					function iterator( node ) {
+
+						observer.observe( node );
+
+					}
+				);
+
+			}
+
+
+			// I handle the IntersectionObserver interaction callback.
+			function handleIntersection( entries ) {
+
+				// Since our threshold is 1 - and our cards are all 100vh - we know that
+				// only one card will be visible / intersecting at a time. As such, we
+				// can use the ID of the first (and only) intersection entry that we find
+				// in the changing collection.
+				entries.forEach(
+					function iterator( entry ) {
+
+						if ( entry.isIntersecting ) {
+
+							window.location.replace( "#" + entry.target.id );
+							// Changing the history appears to lose focus on the
+							// document. As such, let's refocus the cards so that
+							// keyboard navigation continues to work.
+							focusCards();
+
+						}
+
+					}
+				);
 
 			}
 
