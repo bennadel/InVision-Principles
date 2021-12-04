@@ -9,6 +9,18 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin></link>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap"></link>
 	<link rel="stylesheet" type="text/css" href="./styles.css"></link>
+
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:site" content="@BenNadel" />
+	<meta name="twitter:title" content="InVision Principle Cards" />
+	<meta name="twitter:description" content="The principles that drive the mindset of InVision engineers." />
+	<meta name="twitter:creator" content="@BenNadel" />
+	<meta property="og:url" content="https://invision-principles.netlify.app/" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="InVision Principle Cards" />
+	<meta property="og:description" content="The principles that drive the mindset of InVision engineers." />
+	<meta name="twitter:image" content="/invision-principle-cards.gif" />
+	<meta property="og:image" content="/invision-principle-cards.gif" />
 </head>
 <body>
 
@@ -36,9 +48,15 @@
 				<div class="card__title">
 					Humility
 				</div>
-				<svg class="card__logo">
-					<use xlink:href="#svg-sprite-logo"></use>
-				</svg>
+				<a
+					href="https://www.bennadel.com/invision"
+					aria-hidden="true"
+					target="_blank"
+					class="card__logo">
+					<svg class="card__svg">
+						<use xlink:href="#svg-sprite-logo"></use>
+					</svg>
+				</a>
 			</div>
 
 		</li>
@@ -53,9 +71,15 @@
 				<div class="card__title">
 					Co-Ownership
 				</div>
-				<svg class="card__logo">
-					<use xlink:href="#svg-sprite-logo"></use>
-				</svg>
+				<a
+					href="https://www.bennadel.com/invision"
+					aria-hidden="true"
+					target="_blank"
+					class="card__logo">
+					<svg class="card__svg">
+						<use xlink:href="#svg-sprite-logo"></use>
+					</svg>
+				</a>
 			</div>
 
 		</li>
@@ -71,9 +95,15 @@
 					Candor with<br />
 					Compassion
 				</div>
-				<svg class="card__logo">
-					<use xlink:href="#svg-sprite-logo"></use>
-				</svg>
+				<a
+					href="https://www.bennadel.com/invision"
+					aria-hidden="true"
+					target="_blank"
+					class="card__logo">
+					<svg class="card__svg">
+						<use xlink:href="#svg-sprite-logo"></use>
+					</svg>
+				</a>
 			</div>
 
 		</li>
@@ -89,9 +119,15 @@
 					Relentless<br />
 					Self-Development
 				</div>
-				<svg class="card__logo">
-					<use xlink:href="#svg-sprite-logo"></use>
-				</svg>
+				<a
+					href="https://www.bennadel.com/invision"
+					aria-hidden="true"
+					target="_blank"
+					class="card__logo">
+					<svg class="card__svg">
+						<use xlink:href="#svg-sprite-logo"></use>
+					</svg>
+				</a>
 			</div>
 
 		</li>
@@ -107,9 +143,15 @@
 					Go-Getting<br />
 					and Go-Giving
 				</div>
-				<svg class="card__logo">
-					<use xlink:href="#svg-sprite-logo"></use>
-				</svg>
+				<a
+					href="https://www.bennadel.com/invision"
+					aria-hidden="true"
+					target="_blank"
+					class="card__logo">
+					<svg class="card__svg">
+						<use xlink:href="#svg-sprite-logo"></use>
+					</svg>
+				</a>
 			</div>
 
 		</li>
@@ -125,9 +167,15 @@
 					Customer<br />
 					Empathy
 				</div>
-				<svg class="card__logo">
-					<use xlink:href="#svg-sprite-logo"></use>
-				</svg>
+				<a
+					href="https://www.bennadel.com/invision"
+					aria-hidden="true"
+					target="_blank"
+					class="card__logo">
+					<svg class="card__svg">
+						<use xlink:href="#svg-sprite-logo"></use>
+					</svg>
+				</a>
 			</div>
 
 		</li>
@@ -143,9 +191,15 @@
 					Inclusive<br />
 					Design
 				</div>
-				<svg class="card__logo">
-					<use xlink:href="#svg-sprite-logo"></use>
-				</svg>
+				<a
+					href="https://www.bennadel.com/invision"
+					aria-hidden="true"
+					target="_blank"
+					class="card__logo">
+					<svg class="card__svg">
+						<use xlink:href="#svg-sprite-logo"></use>
+					</svg>
+				</a>
 			</div>
 
 		</li>
@@ -161,9 +215,15 @@
 					Intelligent<br />
 					Urgency
 				</div>
-				<svg class="card__logo">
-					<use xlink:href="#svg-sprite-logo"></use>
-				</svg>
+				<a
+					href="https://www.bennadel.com/invision"
+					aria-hidden="true"
+					target="_blank"
+					class="card__logo">
+					<svg class="card__svg">
+						<use xlink:href="#svg-sprite-logo"></use>
+					</svg>
+				</a>
 			</div>
 
 		</li>
@@ -172,11 +232,42 @@
 	<script type="text/javascript">
 		(function() {
 
-			document.querySelector( ".cards" ).focus();
+			focusCards();
+			scrollCardIntoView();
 
-			if ( window.location.hash ) {
+			// ----------------------------------------------------------------------- //
+			// ----------------------------------------------------------------------- //
 
-				document.querySelector( window.location.hash ).scrollIntoView()
+			// Since the scroll-snapping isn't on the BODY - it's on the cards list - we
+			// want to focus the cards so that up/down keyboard navigation will apply to
+			// the correct element.
+			function focusCards() {
+
+				document.querySelector( ".cards" ).focus();
+
+			}
+
+
+			// Since the body isn't actually scrolling, the browser doesn't seem to want
+			// to scroll the correct ID into view. As such, we'll jump in and help the
+			// browser bring the correct element into view.
+			function scrollCardIntoView() {
+
+				if ( ! window.location.hash ) {
+
+					return;
+
+				}
+
+				var node = document.querySelector( window.location.hash );
+
+				if ( ! node ) {
+
+					return;
+
+				}
+
+				node.scrollIntoView();
 
 			}
 

@@ -83,6 +83,12 @@ body {
 	border-radius: 4px ;
 }
 
+.card__svg {
+	display: block ;
+	height: 100% ;
+	width: 100% ;
+}
+
 /* Sweet spot for business card layout. */
 @media ( min-aspect-ratio: 3/2 /* 1.5 */ ) and ( max-aspect-ratio: 6/3 /* 2.0 */ ) {
 	.card {
